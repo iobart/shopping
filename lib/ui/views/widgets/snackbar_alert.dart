@@ -1,22 +1,27 @@
-import 'package:client/data/models/type_alert_snackbar_model.dart';
 import 'package:flutter/material.dart';
+import 'package:shopping/core/models/type_alert_snackbar_model.dart';
 
 enum TypeAlert {
   success,
   error,
 }
 
-const Map<String, TypeAlertSnackBar> typeAlert = {
-  'success': TypeAlertSnackBar(
+ Map<String, TypeAlertSnackBar> typeAlert = {
+  'success': const TypeAlertSnackBar(
     label: 'Success',
     color: Colors.green,
     icon: Icons.check_circle,
   ),
-  'error': TypeAlertSnackBar(
+  'error': const TypeAlertSnackBar(
     label: 'Error',
     icon: Icons.error,
     color: Colors.red,
   ),
+   'warning': const TypeAlertSnackBar(
+    label: 'Warning',
+    icon: Icons.warning,
+    color: Colors.yellow,
+   )
 };
 
 class SnackBarFloating {

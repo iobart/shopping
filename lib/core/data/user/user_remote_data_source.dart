@@ -1,21 +1,25 @@
-class RegisterRemotoDataSource implements RegisterDataSource {
+import 'package:shopping/core/api/shopping_api.dart';
+import 'package:shopping/core/di/locator.dart';
+import 'package:shopping/core/dtos/user_dto.dart';
+import 'package:shopping/core/models/user_model.dart';
 
+class UserRemotoDataSource  {
+  final ShoppingApi _shoppingApi;
 
-  RegisterRemotoDataSource({@required this.client});
+  UserRemotoDataSource({
+    ShoppingApi? shoppingApi,
+  }) : _shoppingApi = shoppingApi ?? locator<ShoppingApi>();
 
-  @override
-  Future<Either<Failure, User>> register(RegisterParams params) async {
-    try {
-      final response = await client.request(
-        url: API_URL,
-        method: 'post',
-        body: params.toJson(),
-      );
-      return Right(UserModel.fromJson(response));
-    } on HttpError catch (error) {
-      return Left(error == HttpError.badRequest
-          ? EmailInUseFailure()
-          : ServerFailure());
-    }
+  Future<bool> registerUser(UserModel user) async {
+    UserDTO userDto = UserDTO.fromModel(model: user);
+    return await  _shoppingApi.registerUser(userDto);
+  }
+  Future<UserDTO> authUser(UserModel user) async {
+    UserDTO userDto = UserDTO.fromModel(model: user);
+    return await  _shoppingApi.authUser(userDto);
+  }
+
+  Future<void> logoutUser() async {
+    return await  _shoppingApi.logoutUser();
   }
 }
