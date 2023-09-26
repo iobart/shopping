@@ -11,6 +11,7 @@ class MenuRemoteDataSource{
   }) : _shoppingApi = shoppingApi ?? locator<ShoppingApi>();
   Future<bool> createMenu(MenuModel menu){
     return _shoppingApi.createMenu(menu);
+
   }
   Stream<QuerySnapshot<MenuDTO>>? getMenu(){
     return _shoppingApi.getMenu();
